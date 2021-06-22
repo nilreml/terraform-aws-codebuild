@@ -319,7 +319,7 @@ resource "aws_codebuild_project" "default" {
       type                = "S3"
       location            = var.secondary_artifact_location
       artifact_identifier = var.secondary_artifact_identifier
-      encryption_disabled = ! var.secondary_artifact_encryption_enabled
+      encryption_disabled = !var.secondary_artifact_encryption_enabled
       # According to AWS documention, in order to have the artifacts written
       # to the root of the bucket, the 'namespace_type' should be 'NONE'
       # (which is the default), 'name' should be '/', and 'path' should be
@@ -422,15 +422,15 @@ resource "aws_codebuild_project" "default" {
   dynamic "secondary_sources" {
     for_each = var.secondary_sources
     content {
-      git_clone_depth     = secondary_source.value.git_clone_depth
-      location            = secondary_source.value.location
-      source_identifier   = secondary_source.value.source_identifier
-      type                = secondary_source.value.type
-      insecure_ssl        = secondary_source.value.insecure_ssl
-      report_build_status = secondary_source.value.report_build_status
+      git_clone_depth     = secondary_sources.value.git_clone_depth
+      location            = secondary_sources.value.location
+      source_identifier   = secondary_sources.value.source_identifier
+      type                = secondary_sources.value.type
+      insecure_ssl        = secondary_sources.value.insecure_ssl
+      report_build_status = secondary_sources.value.report_build_status
 
       git_submodules_config {
-        fetch_submodules = secondary_source.value.fetch_submodules
+        fetch_submodules = secondary_sources.value.fetch_submodules
       }
     }
   }
